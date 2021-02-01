@@ -1,0 +1,20 @@
+# This will specify the controller configuration for our arm
+
+nebulizador_arm: 
+  #Publish all joint states
+  joint_state_controller: #name of the controller
+    type: joint_state_controller/JointStateController #type of action being used
+    publish_rate: 50
+  #Position controllers
+  link1_position_controller:
+    type: position_controllers/JointPositionController
+    joint: link1_joint #name of all the joints that are being addressed by this interface
+  link2_position_controller:
+    type: position_controllers/JointPositionController
+    joint: link2_joint
+  #Trajectory controller
+  arm_joint_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - link1_joint
+      - link2_joint

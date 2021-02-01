@@ -1,0 +1,8 @@
+prefix=/home/crecheverri/flota_robots/nebulizador_ws/install
+
+Name: nebulizador_arm
+Description: Description of nebulizador_arm
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy sensor_msgs std_msgs actionlib actionlib_msgs message_runtime

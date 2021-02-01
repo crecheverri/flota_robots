@@ -1,0 +1,2 @@
+nebulizador_arm
+-DCATKIN_DEVEL_PREFIX=/home/crecheverri/flota_robots/nebulizador_ws/devel -DCMAKE_INSTALL_PREFIX=/home/crecheverri/flota_robots/nebulizador_ws/install -G Unix Makefiles
