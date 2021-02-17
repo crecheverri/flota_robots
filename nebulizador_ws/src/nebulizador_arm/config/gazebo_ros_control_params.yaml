@@ -1,0 +1,13 @@
+nebulizador_arm:
+
+#http://answers.gazebosim.org/question/5468/gazebo_ros_pkgs-no-p-gain-specified-for-pid-in-positionjointinterface/
+
+  gazebo_ros_control:
+    pid_gains:
+      link1_joint: {p: 100.0, i: 0.01, d: 10.0}
+      link2_joint: {p: 100.0, i: 0.01, d: 10.0}
+
+#When initializing RobotHWSim, the robot_ros_control tries to load the pid_gains; if not found the joints
+#will be controlled with gazebo methods. When using the PositionJointInterface, however, an error may appear (even though it may still work correctly)
+#To fix this issue, PID controller gains can be specified in a yaml file.
+#The use of the above may degrade the behavior if the parameters are not correclty tuned

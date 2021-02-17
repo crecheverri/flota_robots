@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<robot name="nebulizador_arm">
+
+    <link name="world"/>
+    <joint name="fixed" type="fixed">
+        <parent link="world"/>
+        <child link="dummy_link"/>
+    </joint>
+
+    <!--<joint name="link1_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10"/>
+        <origin xyz="0 0 0.016" rpy="0 0 0"/>        
+        <parent link="world"/>
+        <child link="dummy_link"/>
+        <dynamics damping="15" friction="2"/>
+    </joint>-->
+
+    <!--<link name="base_link">
+    </link>-->
+
+    <link name="dummy_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.016" length="0.034"/>   
+            </geometry>
+        </visual>
+        <inertial>
+            <!--<mass value="0.501919"/>-->
+            <mass value="3"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.00008047434" ixy="0" ixz="0" iyy="0.00008047434" iyz="0" izz="0.00006424563"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.1416"/>
+            <geometry>
+                <cylinder radius="0.016" length="0.034"/>
+            </geometry>
+        </collision> 
+    </link>
+
+    <!--<joint name="dummy_joint" type="fixed">
+        <parent link="dummy_link"/>
+        <child link="link1"/>
+        <origin xyz="0 0 0.016" rpy="0 0 0"/>
+    </joint>-->
+
+    <link name="link1">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.385"/>
+            <inertia ixx="0.001934" ixy="-0.00004188" ixz="0.00001696" iyy="0.0004250" iyz="0.0005391" izz="0.001805"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 3.1416"/>
+            <geometry>
+                <mesh filename="package://nebulizador_arm/meshes/Eslabon1.stl"/>
+            </geometry>
+        </collision>        
+        <visual>
+            <origin rpy="0 0 3.1416" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://nebulizador_arm/meshes/Eslabon1.stl"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="link1_joint" type="revolute">
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.5708" upper="1.5708" effort="10" velocity="10"/>
+        <origin xyz="0 0 0.016" rpy="0 0 0"/>        
+        <parent link="dummy_link"/>
+        <child link="link1"/>
+        <!--<dynamics damping="2" friction="1"/>-->
+    </joint>
+
+    <link name="link2">
+        <inertial>
+            <mass value="0.348"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="0.0008054" ixy="0.000005522" ixz="-0.00002630" iyy="0.0008908" iyz="0.0002229" izz="0.0004215"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0.004 0.035" rpy="0 0 3.1416"/>
+            <geometry>
+                <mesh filename="package://nebulizador_arm/meshes/Eslabon2.stl"/>
+            </geometry>
+        </collision>        
+        <visual>
+            <origin xyz="0 0.004 0.035" rpy="0 0 3.1416"/>
+            <geometry>
+                <mesh filename="package://nebulizador_arm/meshes/Eslabon2.stl"/>
+            </geometry>
+        </visual>        
+    </link>
+
+    <joint name="link2_joint" type="revolute">
+        <axis xyz="1 0 0"/>
+        <limit lower="0.785398" upper="-0.785398" effort="10" velocity="10"/>
+        <origin xyz="-0.00838 0.190 0.06964" rpy="0 0 0"/>        
+        <parent link="link1"/>
+        <child link="link2"/>
+        <!--<dynamics damping="2" friction="0.05"/>-->
+    </joint> 
+
+<!-->    <link name="link3">
+        <visual>
+            <origin rpy="0 1.5708 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.008" length="0.01715"/>
+            </geometry>
+        </visual>        
+    </link>-->
+
+<!--    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link1_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="tran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="link2_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor2">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission> -->
+
+<!-- The connection of the controllers with the hardware interface (that encapsulate the hardware) is done through the ros_control interfaces.
+-->
+    <gazebo reference="link1">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+    </gazebo>
+
+    <gazebo reference="link2">
+        <mu1>0.2</mu1>
+        <mu2>0.2</mu2>
+    </gazebo> 
+    
+<!--    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/nebulizador_arm</robotNamespace>
+        </plugin>
+    </gazebo>
+     To control a given robot using ros_control, a class derived from the hardware_interface::RobotHW class should be implemented. This class should support one or more of the standard interfaces like e.g the EffortJoint Interface or VelocityJointInterface -->
+
+</robot>

@@ -1,0 +1,23 @@
+# This will specify the controller configuration for our arm
+
+nebulizador_arm: 
+  #Publish all joint states
+  joint_state_controller: #name of the controller - to publish the joint states of the arm
+    type: joint_state_controller/JointStateController #type of action being used
+    publish_rate: 50
+  #Position controllers
+  link1_position_controller:
+    type: position_controllers/JointPositionController # To move each of the two joints upon receiving a goal position
+    joint: link1_joint #name of all the joints that are being addressed by this interface
+  link2_position_controller:
+    type: position_controllers/JointPositionController
+    joint: link2_joint
+  #Trajectory controller
+  nebulizador_arm_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - link1_joint
+      - link2_joint
+
+#The name of the trajectory controller is arm_joint_trajectory_controller and it is defined within the namespace nebulizador_arm
+#(that is why the FollowJointTrajectory action client is initialized with the name "/nebulizador_arm/nebulizadorarm_joint_trajecttory controller/follow_joint_trajectory"
